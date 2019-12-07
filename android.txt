@@ -1,0 +1,3 @@
+title=LaLigadeFutbol
+author=VictorHVivasC
+orientation= portrait

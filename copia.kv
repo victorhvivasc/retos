@@ -1,0 +1,75 @@
+
+    orientation: "vertical"
+    data_id: ""
+    id_equipo: ""
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 1.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    Label:
+        size_hint_y: 0.5
+        text: "INSCRIBIR JUGADORA NUEVA"
+    Label:
+        text_size: self.size
+        halign: "left"
+        size_hint_y: 0.5
+        text: "Nombres :"
+    TextInput:
+        padding:5,5,5,5
+        id: ti_ndj
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese los nombres de la jugadora"  
+    leftLabel:
+        text: "Apellidos: "
+    TextInput:
+        id: ti_apell
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese los apellidos de la jugadora"  
+    leftLabel:
+        text: "Numero de DNI: "
+    TextInput:
+        id: ti_dni
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Indique el numero de dni"
+    leftLabel:
+        text: "Numero de telefono: "
+    TextInput:
+        id: ti_waspj
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Indique el numero de contacto incluyendo codigo de area"
+    leftLabel:
+        text: "Fecha de Nacimiento"
+    TextInput:
+        id: ti_fdn
+        size_hint_y: 0.5
+        multiline: True      
+        hint_text: "Fecha de naciemiento"
+    Label:
+        text: ""
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            background_normal: ""
+            background_color: 1,0,0,0.85
+            text: "Volver"  
+            on_release: root.volver(root.data_id, root.id_equipo)
+        Button:
+            background_color: 0, 1, .2, 5
+            text: "Continuar"
+            on_release: root.inserta_dato2()
+            #on_press: root.inserta_dato()

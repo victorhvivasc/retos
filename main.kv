@@ -1,0 +1,642 @@
+#:kivy 1.1.0
+<MainWid>:
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<StartWid>:
+    orientation: "vertical"
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size    
+    BoxLayout:
+        size_hint_y: 0.7
+        Image:
+            source: "portadas/pie_balon.jpg"
+    Button:
+        background_color: 0, 1, .2, 5
+        size_hint_y: 0.1
+        text: "Acceder"
+        on_release: root.createdb()
+    Button:
+        #BorderImage: 16,16,16,16
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        back_color: (1,1,1,1)
+        size_hint_y: 0.1
+        text: "Salir"
+        on_release: root.fin()
+    BoxLayout:
+        size_hint_y: 0.1
+<torneo>:
+    orientation: "vertical"
+    BoxLayout:
+        #size_hint_y: 0.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    Button:
+        background_color: 0, 1, .2, 5
+        text: "Crear nuevo Torneo"
+        on_release: root.crear_torneo()
+    Button:
+        background_normal: ''
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        on_release: root.goto_atras()
+<equipos>:
+    orientation: "vertical"
+    nombre_equipo: ""
+    data_id: ""
+    id_equipo: ""
+    BoxLayout:
+        Button:
+            size_hint_x: 0.5
+            background_color: 0, 1, .2, 5
+            text: root.nombre_equipo
+            Image:
+                source: "imagenes/e_car3.png"
+                self_hint: 1, None
+                height: self.parent.height
+                y: self.parent.y
+                x: self.parent.x -25
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x:0.35
+            Button:
+                background_color: 0, 1, 0.8, 1
+                text: "Ver jugadoras"
+                on_press: root.goto_jugadora(root.data_id, root.id_equipo)
+            Button:
+                text: "Baja de equipo"    
+<informacion>:
+    data: " "
+    data_id: " "
+    data2: " "
+    imagenes: " "
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            size: self.size
+            pos: self.pos 
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x:0.15
+        Image:
+            source: "imagenes/torneos/{}".format(root.imagenes)
+    Button:
+        background_color: 0.5, .5, .5, .5
+        size_hint_x:0.7
+        size_font: self.width*0.4
+        text: root.data
+        on_press: root.inform(root.data_id, root.data2)
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x:0.15
+        Button:
+            #background_normal: ''
+            background_color: 0, 0, 1, 0.5
+            text: "+INFO"
+            #size_hint_x: 0.1
+            pos: self.pos
+            on_release: root.verdetalles(root.data_id)
+        Button:
+            #background_normal: ''
+            background_color: 0, 0, 1, 0.5
+            text: "Editar"
+            #size_hint_x: 0.1
+            pos: self.pos
+            on_release: root.actualizar(root.data_id)
+<infotorneo>:
+    data_id: " "
+    data2: " "
+    #equipon:
+    orientation: "vertical"
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 0.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7 
+    Label:
+        text: "EQUIPOS INSCRIPTOS AL TORNEO {}".format(root.data_id)
+        size_hint_y:0.08
+    ScrollView:
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgb: 0,0,0
+            id: container1
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols:1 
+            row_default_height: root.height*0.08
+            height: self.minimum_height
+<pruebaloca>:
+    data_id: " "
+    data2: " "
+    #equipon:
+    orientation: "vertical"
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Button:
+        text: "prueba loca"+root.data2
+<basededatoswid>:
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols:1 
+            row_default_height: root.height*0.15
+            height: self.minimum_height
+<leftLabel@Label>:
+    size_hint_y: 0.5
+    text_size: self.size
+    halign: "left"
+<mensajes>:
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: message
+            size_hint: 1, 0.8
+            text: ""
+        Button:
+            background_normal: ""
+            background_color: 0,0,1,0.85
+            size_hint: 1, 0.2
+            text: "Aceptar"
+            on_release: root.dismiss()
+<insertar>:
+    orientation: "vertical"
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 1.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    Label:
+        text_size: self.size
+        halign: "left"
+        size_hint_y: 0.5
+        text: "Nombre del Torneo: "
+    TextInput:
+        padding:5,5,5,5
+        id: ti_nde
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese un nombre para el torneo"  
+    leftLabel:
+        text: "Organizador: "
+    TextInput:
+        id: ti_capi
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese el nombre que sera difundido"  
+    leftLabel:
+        text: u"Informacion de Contacto: "
+    TextInput:
+        id: ti_conta
+        size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese dato de contacto (whatsapp/telegram)"
+    leftLabel:
+        text: "Ubicacion del torneo"
+    TextInput:
+        id: ti_hora
+        size_hint_y: 0.5
+        multiline: True      
+        hint_text: "Indique el lugar, puede ser link google maps"
+    leftLabel:
+        text: "Reglas del torneo"
+    TextInput:
+        id: ti_reglas
+        size_hint_y: 0.5
+        multiline: True      
+        hint_text: "Copiar y pegar texto con las normas"
+    Label:
+        size_hint_y: 0.5
+        text: "SELECCIONE LA MODALIDAD DEL TORNEO"
+    BoxLayout:
+        ToggleButton:
+            id: tb_relampago
+            background_color: 0, 0, 1, 0.5
+            text: "Torneo\n Relampago"
+            group: "torneo"
+            halign: "center"
+            on_press: 
+        ToggleButton:
+            id: tb_elidire
+            background_color: 0, 0, 1, 0.5
+            text: "Eliminacion\n Directa"
+            group: "torneo"
+            halign: "center"
+        ToggleButton:
+            id: tb_elidob
+            background_color: 0, 0, 1, 0.5
+            text: "Doble\n Eliminacion"
+            group: "torneo"
+            halign: "center"
+            #state: "down"
+        ToggleButton:
+            id: tb_piram
+            background_color: 0, 0, 1, 0.5
+            text: "Piramide"
+            group: "torneo"
+            halign: "center"
+    Label:
+        text: ""
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            background_normal: ""
+            background_color: 1,0,0,0.85
+            text: "Volver"  
+            on_press: root.back_to_torneo()
+        Button:
+            background_color: 0, 1, .2, 5
+            text: "Continuar"
+            on_press: root.inserta_dato2()
+            #on_press: root.inserta_dato()
+<ventanaextratorneo>:
+    orientation: "vertical"
+    data_id: ' '
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 0.8
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container3
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols: 1
+            row_default_height: root.height*.1
+            height: self.minimum_height  
+    Button:
+        background_color: 0, 1, .2, 5
+        text: "Registrar"
+        size_hint_y:0.15
+        on_release: root.inserta_dato4() 
+    Button:
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        size_hint_y:0.15
+        on_release: root.volver() 
+<actualiza_bd>:
+    orientation: "vertical"
+    data_id: ' '
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 1.5
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    Label:
+        text_size: self.size
+        halign: "left"
+        text: "Codigo de Torneo: "+root.data_id
+    leftLabel:
+        text: "Nombre del Torneo: "
+    TextInput:
+        id: ti_nde
+        multiline: False      
+        hint_text: "Ingrese un nombre para el torneo"  
+        readonly: True
+    leftLabel:
+        text: "Organizador: "
+    TextInput:
+        id: ti_capi
+        multiline: False      
+        hint_text: "Ingrese el nombre que sera difundido"  
+    leftLabel:
+        text: u"Información de Contacto: "
+    TextInput:
+        id: ti_conta
+        multiline: False      
+        hint_text: "Ingrese dato de contacto (whatsapp/telegram)"
+    leftLabel:
+        text: "Ubicacion del torneo"
+    TextInput:
+        id: ti_hora
+        multiline: True      
+        hint_text: "Indique el lugar, puede ser link google maps"
+    BoxLayout:
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            background_color: 0.2, 1, .2, 5
+            text: "Editar datos"
+            on_release: root.confirmaact()
+        Button:
+            #background_normal: ""
+            background_color: 0,0,0,1
+            text: "Eliminar"  
+            on_release: root.confirmadelete()
+    Button:
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        on_release: root.back_to_dbw()
+<detallestorneo>:
+    orientation: "vertical"
+    data_id: " "
+    canvas.before: 
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 0.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    #Label:
+    #    text: "Navega por las opciones"
+    #    size_hint_y:0.07
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container2
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols: 1
+            row_default_height: root.height*1
+            height: self.minimum_height  
+    Button:
+        background_color: 0, 1, .2, 5
+        text: "Inscribirse"
+        size_hint_y:0.07
+        on_release: root.goto_innsc(root.data_id)
+         
+    Button:
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        size_hint_y:0.07
+        on_release: root.goto_atras()
+<inscribirequipo>:
+    orientation: "vertical"
+    data_id: " "
+    canvas.before:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 0.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container4
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols: 1
+            row_default_height: root.height*0.09
+            height: self.minimum_height  
+    #Button:
+    #    text: "Inscribirse"
+    #    size_hint_y:0.07
+    #    on_release: root.retornar()
+         
+    Button:
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        size_hint_y:0.07
+        on_release: root.retornar()
+<buena_fe>:
+    orientation: "vertical"
+    data_id: " "
+    id_equipo: ""
+    canvas.before:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+    Label:
+        text: "LISTA DE BUENA FE \n PARA EL TORNEO"
+        size_hint_y:0.16
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container5
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols: 1
+            row_default_height: root.height*0.07
+            height: self.minimum_height  
+    Button:
+        text: "Anotar jugadora en el equipo: {} \n para el torneo: {} ".format(root.id_equipo, root.data_id)
+        size_hint_y:0.2
+        on_press: root.goto_insj(root.data_id, root.id_equipo)   
+    Button:
+        text: "Volver"
+        size_hint_y:0.2
+        on_press: root.goto_principio(root.data_id, root.id_equipo)  
+<jugadora>:
+    orientation: "vertical"
+    data_id: ""
+    id_equipo: ""
+    canvas:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text_size: self.size
+        markup: True
+        halign: "center"
+        #size_hint_y: 0.5
+        text: "[color=#000000][b]JUGADORAS REGISTRADAS[/b][/color]"
+    Label:
+        text_size: self.size
+        halign: "left"
+        #size_hint_y: 0.5
+        text: "Numero de DNI:"
+    TextInput:
+        padding:5,5,5,5
+        id: ti_ndj
+        #size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese el numero de DNI"  
+    Label:
+        text_size: self.size
+        halign: "center"
+        size_hint_y: 2
+        text: ""
+    Label:
+        text_size: self.size
+        halign: "center"
+        markup: True
+        #size_hint_y: 0.5
+        text: "[color=#000000][b]JUGADORAS NO REGISTRADAS[/b][/color]"
+    Label:
+        text_size: self.size
+        halign: "left"
+        #size_hint_y: 0.5
+        text: "Nombres :"
+    TextInput:
+        padding:5,5,5,5
+        id: ti_ndj
+        #size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese los nombres de la jugadora"  
+    leftLabel:
+        text: "Apellidos: "
+    TextInput:
+        id: ti_apell
+        #size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Ingrese los apellidos de la jugadora"  
+    leftLabel:
+        text: "Numero de DNI: "
+    TextInput:
+        id: ti_dni
+        #size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Indique el numero de dni"
+    leftLabel:
+        text: "Numero de telefono: "
+    TextInput:
+        id: ti_waspj
+        #size_hint_y: 0.5
+        multiline: False      
+        hint_text: "Indique el numero de contacto incluyendo codigo de area"
+    leftLabel:
+        text: "Fecha de Nacimiento"
+    TextInput:
+        id: ti_fdn
+        #size_hint_y: 0.5
+        multiline: True      
+        hint_text: "Fecha de naciemiento"
+    Label:
+        text: ""
+        size_hint_y: 4
+<inscribirjugadora>: 
+    orientation: "vertical"
+    data_id: " "
+    canvas.before:
+        Color:
+            rgb: 191.0/255.0,243.0/255.0,129.0/255.0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: 0.2
+        orientation: "horizontal"
+        Image:
+            source: "imagenes/balon.png"
+            size_hint_x: 0.3
+        Image:
+            source: "imagenes/cintillo.png"
+            size_hint_: 0.7
+    #Label:
+    #    text: "Navega por las opciones"
+    #    size_hint_y:0.07
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container6
+            padding: 10,10,10,10
+            spacing: 5
+            size_hint_y: None 
+            cols: 1
+            row_default_height: root.height*0.75
+            height: self.minimum_height  
+    Button:
+        background_color: 0, 1, .2, 5
+        text: "Anotarse"
+        size_hint_y:0.07
+        on_release: root.goto_innsc(root.data_id)
+         
+    Button:
+        background_normal: ""
+        background_color: 1,0,0,0.85
+        text: "Volver"
+        size_hint_y:0.07
+        on_release: root.volver(root.data_id, root.id_equipo)
+
+    
